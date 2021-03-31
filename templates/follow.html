@@ -1,0 +1,18 @@
+{% extends "base.html" %} 
+{% block title %} Записи автора {% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% include "includes/menu.html" with index=True %}
+        {% load cache %}
+        {% cache 20 index_page page%}
+            <h1> Записи автора </h1>
+            {% for post in page %}
+                {% include "includes/post_card.html" with author=post.author user_post=post %}
+            {% endfor %}
+        {% endcache %}
+    </div>
+
+    {% include "includes/paginator.html" %}
+    
+{% endblock %}

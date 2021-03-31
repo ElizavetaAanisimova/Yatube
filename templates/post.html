@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Просмотр отдельной записи{% endblock %}
+{% block header %}{{ author.get_full_name }}{% endblock %}
+{% block content %}
+<main role="main" class="container">
+    <div class="row"> 
+        {% include "includes/author_card.html" %}
+        <div class="col-md-9">
+            {% include "includes/post_card.html" %}
+        </div>
+    </div>
+</main> 
+{% endblock %}
