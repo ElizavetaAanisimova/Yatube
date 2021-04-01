@@ -205,10 +205,13 @@ class PostPagesTests(TestCase):
         self.assertNotEqual(response_2.content, response_3.content)
 
     def test_following_authorized_client(self):
-        """Авторизованный пользователь может подписаться и отписаться."""
+        """Авторизованный пользователь может подписаться"""
         self.assertTrue(Follow.objects.filter(
             user=PostPagesTests.user1,
             author=PostPagesTests.user).exists())
+
+    def test_unfollowing_authorized_client(self):
+        """Авторизованный пользователь может отписаться"""
         Follow.objects.filter(
             user=PostPagesTests.user1,
             author=PostPagesTests.user).delete()

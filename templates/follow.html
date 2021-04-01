@@ -1,12 +1,12 @@
 {% extends "base.html" %} 
-{% block title %} Записи автора {% endblock %}
+{% block title %} Избранные авторы {% endblock %}
 
 {% block content %}
     <div class="container">
         {% include "includes/menu.html" with index=True %}
         {% load cache %}
-        {% cache 20 index_page page%}
-            <h1> Записи автора </h1>
+        {% cache 20 follow_page page%}
+            <h1> Избранные авторы </h1>
             {% for post in page %}
                 {% include "includes/post_card.html" with author=post.author user_post=post %}
             {% endfor %}

@@ -27,7 +27,10 @@
                 {{ item.author.username }}
             </a>
         </h5>
-        <p>{{ item.text | linebreaksbr }}</p>
+        <details>
+            <summary>{{ item }}</summary>
+            <p>{{item.text | linebreaksbr }}</p>
+        </details>
     </div>
 </div>
 {% endfor %}

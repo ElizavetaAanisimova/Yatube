@@ -6,8 +6,7 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 
-from posts.forms import PostForm
-from posts.models import Group, Post, User
+from posts.models import Comment, Group, Post, User
 
 
 @override_settings(MEDIA_ROOT=tempfile.mkdtemp(dir=settings.BASE_DIR))
@@ -30,8 +29,6 @@ class PostFormTests(TestCase):
             content=cls.small_gif,
             content_type='image/gif'
         )
-
-        cls.form = PostForm()
 
         cls.user = User.objects.create(
             username='TestName',
@@ -155,3 +152,24 @@ class PostFormTests(TestCase):
             })
         )
         self.assertTrue(response.context['user_post'].image)
+
+    def test_new_comment(self):
+        """Создание комментария прошло успешно."""
+        comment_count = Comment.objects.count()
+        form_data = {
+            'text': 'Новый комментарий',
+        }
+        response = self.authorized_client.post(
+            reverse('add_comment', kwargs={
+                'username': self.user.username,
+                'post_id': self.post.id
+            }),
+            data=form_data,
+            follow=True
+        )
+        self.assertRedirects(response, reverse(
+            'post',
+            kwargs={'username': self.user.username, 'post_id': self.post.id}
+        ))
+
+        self.assertEqual(Comment.objects.count(), comment_count + 1)

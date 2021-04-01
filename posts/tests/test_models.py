@@ -75,6 +75,7 @@ class PostModelTest(TestCase):
         field_verboses = {
             'text': 'Текст публикации',
             'group': 'Название группы',
+            'image': 'Изображение',
         }
         for value, expected in field_verboses.items():
             with self.subTest(value=value):
@@ -87,6 +88,7 @@ class PostModelTest(TestCase):
         field_help_texts = {
             'text': 'Введите текст',
             'group': 'Выберите название группы',
+            'image': 'Выберите изображение',
         }
         for value, expected in field_help_texts.items():
             with self.subTest(value=value):

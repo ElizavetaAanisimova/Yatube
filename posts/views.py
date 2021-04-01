@@ -52,15 +52,16 @@ def profile(request, username):
     paginator = Paginator(user_posts, 10)
     page_number = request.GET.get('page')
     page = paginator.get_page(page_number)
-    if request.user.is_authenticated:
-        following = Follow.objects.filter(
-            user=request.user,
-            author__username=username).exists()
-    else:
-        following = False
+    following_count = user.follower.all().count()
+    follower_count = user.following.all().count()
+    following = request.user.is_authenticated and Follow.objects.filter(
+        user=request.user,
+        author__username=username).exists()
     return render(
         request, 'profile.html', {
             'author': user, 'post_count': post_count,
+            'following_count': following_count,
+            'follower_count': follower_count,
             'page': page, 'following': following, 'is_short': True
         })
 
